@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Parallel Coordinates</title>
+	<script src="js/d3/d3.min.js"></script>
+	<script src="js/util.js"></script>
+	<script src="js/Vec2.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+
+<style>
+	canvas {
+		/*border: 1px solid #eee;*/
+		/*padding-bottom: 20px;*/
+		margin-bottom: 20px;
+	}
+	
+	h3 {
+		color: #ccc;
+		margin-top: 60px;
+	}
+	ul {
+		list-style: none;
+	}
+	li span {
+		margin-right: 25px;
+		font-weight: bold;
+	}
+	
+</style>
+</head>
+<body>
+
+	<div class="header">
+		<p class="main-title">Parallel Coordinates</p>
+		<p class="main-subtitle">exploring high dimensional data</p>
+		<p class="authors">by Brett Moran</p>
+	</div>
+	<div class="container">
+		<div class="section">
+			<h3>
+				Introduction
+			</h3>
+			<p>
+				Coordinate systems are used to help us visualize data, functions, relationships between variables, and much more. The one we are most familiar with is called the <span class="notes">Cartesian Coordinate System</span>. It is special because it places the axes (dimensions) orthogonal to each other. This is a natural and useful arrangement of variables, resulting in graphs that are natural to interpret.
+			</p>
+			<p>
+				However, there is a drawback for using orthogonal axes: there is no room to place more than three dimensions. Our vision and visualization skills are limited to three spatial dimensions. Meaning that if we want (or need) to visualize more than three dimensions, we need to use different types of encodings: color, animation, etc.
+			</p>
+			<p>
+				Are we then doomed to never visualize truly high-dimensional data? No. There are many kinds of coordinate systems that we can use to help us. The one we'll look at today is called the <span class="notes">Parallel Coordinate System</span>. Rather than placing axes orthogonal to each other, in Parallel coordinates, all axes are parallel to each other. As such, we can place as many dimensions as is reasonable; far more than we can using Cartesian coordinates.
+			</p>
+			<p>
+				Of course, there are challenges for using Parallel coordinates, with the main one being a lack of interpretability. With some training and knowledge of when it's appropriate to use Parallel coordinate plots, we'll overcome the interpretability hurdle. And, once that happens, we can be confident of our analyses when we look at higher-dimensional data that would be difficult to visualize in Cartesian coordinates.
+			</p>
+			<h3>
+				How do Parallel coordinates work?
+			</h3>
+			<p>
+				To answer this, let's look at a simple example using both Cartesian Coordinates and Parallel Coordinates.
+				We're going to visualize the function: y = x.
+			</p>
+
+			<div id="y-eq-x">
+				<iframe src="minis/y-equals-x.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+
+			<p>Cool, right?</p>
+			<p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to. To make this clear, go ahead and <span class="notes">hover</span> over the <span style="color: #0099ff">points</span>/<span style="color: #ff0099">lines</span> to see how they are connected.</p>
+			<p>To build intuition, let's look at another linear function: y = x + 1.</p>
+
+			<div id="y-eq-x-plus-one">
+				<iframe src="minis/y-equals-x-plus-one.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+
+			<p>Interesting. The lines in the Parallel coordinate plot are still parallel to each other, but now they have a small slope. And, as many of us are already familiar with, the Cartesian coordinate graph shows the y = x line translated one unit upward on the y-axis.</p>
+
+			<p>Since the slope of the parallel coordinate lines changed when modifying the y-intercept, let's look at what altering the slope of the equation does. Let's look at the function: y = 3x.</p>
+
+			<div id="y-eq-3x">
+				<iframe src="minis/y-equals-3x.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+
+			<p>What is going on now? The lines aren't parallel anymore. This looks nonlinear now, but remember, this is in Parallel Coordinates. Perhaps a better way to think about this is to think <span class="notes">scaling</span>. In other words, each x-value is mapped to a y-value that has been stretched by three times the original x-value.</p>
+
+			<p>One thing to watch for in particular is the scaling of each axis. Just like how functions and data can be distorted by changing the scales of axes in Cartesian coordinates, Parallel coordinates are also susceptible to this kind of manipulation.</p>
+			<p>As an example, let's look at the function: y = 3x once again, but this time with different scales.</p>
+	
+			<div id="y-eq-3x-different-scales">
+				<iframe src="minis/y-equals-3x-different-scales.html" scrolling="no" frameborder="0"></iframe>
+			</div>			
+
+			<p>By making the y-axis scale three times as large as the x-axis scale, the function looks like y = x rather than y = 3x. This distortion is present on both coordinate systems.</p>
+
+
+			<h3>Nonlinear Functions</h3>
+			<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: y = x^2.</p>
+
+			<div id="y-eq-x2">
+				<iframe src="minis/y-equals-x2.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+
+			<p>The next nonlinear function we'll look at is the exponential function: y = exp{x}.</p>
+			<div id="y-eq-exp-x">
+				<iframe src="minis/y-equals-exp-x.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+	
+			<p>Now let's look at the fascinating trigonometric functions: y = sin(x), y = cos(x), and y = tan(x).</p>
+			
+			<div id="y-eq-sinx">
+				<iframe src="minis/y-equals-sinx.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+			<div id="y-eq-cosx">
+				<iframe src="minis/y-equals-cosx.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+			<div id="y-eq-tanx">
+				<iframe src="minis/y-equals-tanx.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+			<!-- <p>Here's another interactive, to see how changing the y-intercept alters the Parallel coordinates plot.</p> -->
+			
+
+		</div>	
+
+		<div class="footer">
+			<p>Thanks for checking this out!</p>
+			<p>There are a lot of resources on Parallel Coordinates. Here are a few.</p>
+			<p>There are also many different types of coordinate systems, each with their own strengths and weaknesses. Here are just a couple to whet your apetite. (Polar, Spherical, Radial a.k.a. Radar)</p>
+		</div>
+</body>
+
+<script>
+	// var canvas = document.getElementById("canvas");
+	// var ctx = canvas.getContext("2d");
+
+	window.addEventListener("keydown", function(e){
+	  if (e.keyCode == '38') {
+	  	// up arrow
+	  }
+	  else if (e.keyCode == '40') {
+	    // down arrow
+	  }
+	  else if (e.keyCode == '37') {
+	  	// left arrow
+	  }
+	  else if (e.keyCode == '39') {
+	  	// right arrow
+	  }
+	})
+
+	
+	window.addEventListener("mouseover", function(e){
+		if (!running) {
+			queue();
+			running = true;
+		} 
+	})
+
+	window.addEventListener("mouseout", function(e){
+		if (running) {
+			dequeue();
+			running = false;
+		} 
+	})
+
+
+	var raf;
+	var running = false;
+	function queue() {
+		raf = window.requestAnimationFrame(loop);
+	}
+	function dequeue() {
+		window.cancelAnimationFrame(raf);
+	}
+
+	function loop() {
+		raf = window.requestAnimationFrame(loop);
+	}
+
+
+</script>
+</html>

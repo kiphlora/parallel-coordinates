@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Points</title>
+
+	<script src="../js/d3/d3.min.js"></script>
+</head>
+<body>
+	<div id="container">
+	</div>
+	<script>
+		width = 960;
+		height = 600;
+		var div = d3.select("#container");
+		var svg = div.append("svg")
+				.attr("width", width)
+				.attr("height", height)
+		
+		// cartesian_g = svg.append("g")
+		// 		.attr("tranform", "translate(20,20)");
+
+		// parallel_g = svg.append("g")
+		// 		.attr("tranform", "translate(500,20)");		
+
+		var cartesian_x = d3.scaleLinear()
+				.domain([-20, 20])
+				.range([0, width/2]); 
+		var cartesian_y = d3.scaleLinear()
+				.domain([-20, 20])
+				.range([0, height/2]);
+
+		
+		var parallel_y = d3.scaleLinear()
+				.domain([-20, 20])
+				.range([height/2, height])
+
+		var parallel_axis_locs = [10, 110];
+
+
+		var origin = [10,10];
+
+		var points = [origin];
+
+
+		svg.selectAll(".cartesian-points").data(points)
+			.enter().append("circle")
+				.attr("cx", (d,i) => {return cartesian_x(d[0]);})
+				.attr("cy", (d,i) => {return cartesian_y(d[1]);})
+				.attr("r", 5)
+				.attr("fill", "#0099ff")
+
+
+		var ppoints = [[parallel_axis_locs[0], origin[0]], [parallel_axis_locs[1], origin[1]]];
+		svg.selectAll(".parallel-points").data(ppoints)
+			.enter().append("circle")
+				.attr("cx", (d,i) => {return d[0];})
+				.attr("cy", (d,i) => {return parallel_y(d[1]);})
+				.attr("r", 5)
+				.attr("fill", "#ff0099")
+
+		svg.selectAll(".parallel-lines").data(points)
+			.enter().append("line")
+				.attr("x1", parallel_axis_locs[0])
+				.attr("y1", (d,i) => {return parallel_y(d[0]);})
+				.attr("x2", parallel_axis_locs[1])
+				.attr("y2", (d,i) => {return parallel_y(d[1]);})
+				.style("stroke-width", 2)
+				.style("stroke", "#ff0099")
+
+	</script>
+</body>
+</html>

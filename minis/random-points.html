@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Many Points</title>
+
+	<script src="../js/d3/d3.min.js"></script>
+</head>
+<body>
+	<div id="container">
+	</div>
+	<script>
+		width = 1000;
+		height = 600;
+		var div = d3.select("#container");
+		var svg = div.append("svg")
+				.attr("width", width)
+				.attr("height", height)
+		
+		// cartesian_g = svg.append("g")
+		// 		.attr("tranform", "translate(20,20)");
+
+		// parallel_g = svg.append("g")
+		// 		.attr("tranform", "translate(500,20)");		
+
+		var cartesian_x = d3.scaleLinear()
+				.domain([-20, 20])
+				.range([0, width*0.60]); 
+		var cartesian_y = d3.scaleLinear()
+				.domain([-20, 20])
+				.range([height, 50]);
+
+		
+		var p_x = d3.scaleLinear()
+				.domain([-20,20])
+				.range([50,height]);
+		var p_y = d3.scaleLinear()
+				.domain([-20,20])
+				.range([50,height]);
+
+		var all_p = d3.scaleBand()
+				.domain([0,1])
+				.rangeRound([width*0.75, width]);
+
+
+		var origin = [0,0];
+
+		var points = [origin];
+		for (var i=0; i<20; i++){
+			points.push([Math.random()*40 - 20, Math.random()*40 - 20]);
+		}
+
+		svg.append("line").attr("class", "cartesian-x-axis")
+				.attr("x1", cartesian_x(-20))
+				.attr("y1", cartesian_y(0))
+				.attr("x2", cartesian_x(20))
+				.attr("y2", cartesian_y(0))
+				.attr("stroke", "#999");
+
+		svg.append("line").attr("class", "cartesian-y-axis")
+				.attr("x1", cartesian_x(0))
+				.attr("y1", cartesian_y(-20))
+				.attr("x2", cartesian_x(0))
+				.attr("y2", cartesian_y(20))
+				.attr("stroke", "#999");
+
+		svg.append("line").attr("class", "parallel-x-axis")
+				.attr("x1", all_p(0))
+				.attr("y1", p_x(-20))
+				.attr("x2", all_p(0))
+				.attr("y2", p_x(20))
+				.attr("stroke", "#999");
+
+		svg.append("line").attr("class", "parallel-y-axis")
+				.attr("x1", all_p(1))
+				.attr("y1", p_y(-20))
+				.attr("x2", all_p(1))
+				.attr("y2", p_y(20))
+				.attr("stroke", "#999");
+
+
+		svg.selectAll(".cartesian-points").data(points)
+			.enter().append("circle")
+				.attr("cx", (d,i) => {return cartesian_x(d[0]);})
+				.attr("cy", (d,i) => {return cartesian_y(d[1]);})
+				.attr("r", 5)
+				.attr("fill", "#0099ff")
+
+		pxp = points.map((m) => {return m[0];});
+		svg.selectAll(".parallel-x-points").data(pxp)
+			.enter().append("circle")
+				.attr("cx", (d,i) => {return all_p(0);})
+				.attr("cy", (d,i) => {return p_x(d);})
+				.attr("r", 5)
+				.attr("fill", "#ff0099")
+
+		pyp = points.map((m) => {return m[1];});
+		svg.selectAll(".parallel-x-points").data(pyp)
+			.enter().append("circle")
+				.attr("cx", (d,i) => {return all_p(1);})
+				.attr("cy", (d,i) => {return p_y(d);})
+				.attr("r", 5)
+				.attr("fill", "#ff0099")
+
+		svg.selectAll(".parallel-lines").data(points)
+			.enter().append("line")
+				.attr("x1", all_p(0))
+				.attr("y1", (d,i) => {return p_x(d[0]);})
+				.attr("x2", all_p(1))
+				.attr("y2", (d,i) => {return p_y(d[1]);})
+				.style("stroke-width", 2)
+				.style("stroke", "#ff0099")
+
+	</script>
+</body>
+</html>
