@@ -46,17 +46,17 @@
 		// parallel_g = svg.append("g")
 		// 		.attr("tranform", "translate(500,20)");		
 
-		cxmin = -20;
-		pxmin = -20;
+		cxmin = -15;
+		pxmin = -15;
 
-		cxmax = 20;
-		pxmax = 20;
+		cxmax = 15;
+		pxmax = 15;
 
-		cymin = -5;
-		pymin = -5;
+		cymin = -10;
+		pymin = -10;
 
-		cymax = 5;
-		pymax = 5;
+		cymax = 10;
+		pymax = 10;
 
 
 		var cartesian_x = d3.scaleLinear()
@@ -98,17 +98,18 @@
 		var points = [origin];
 		
 		function f(x){
-			return Math.sin(x);
+			return 1/(x*x);
 		}
 
-		var x = seqLen(-6*Math.PI, 6*Math.PI, 251);
+		var x = seqLen(-10, 10, 151);
 		// for (var i=-20; i<=20; i++){
 		// 	x.push(i);
 		// }
 
 		var points = [];
 		for (var i=0; i<x.length; i++){
-			points.push([x[i], f(x[i])]);
+			var y = f(x[i]);
+			if (y != Infinity && y != -Infinity) points.push([x[i], y]);
 		}
 
 		// svg.append("line").attr("class", "cartesian-x-axis")
