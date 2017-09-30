@@ -4,6 +4,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Parallel Coordinates</title>
+
+	<script type="text/javascript" async
+	  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+	</script>
+
 	<script src="js/d3/d3.min.js"></script>
 	<script src="js/util.js"></script>
 	<script src="js/Vec2.js"></script>
@@ -59,7 +64,7 @@
 			</h3>
 			<p>
 				To answer this, let's look at a simple example using both Cartesian Coordinates and Parallel Coordinates.
-				We're going to visualize the function: y = x.
+				We're going to visualize the function: \( y = x \).
 			</p>
 
 			<div id="y-eq-x">
@@ -69,15 +74,15 @@
 			<p>Cool, right?</p>
 			<p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to.</p>
 			<!-- <p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to. To make this clear, go ahead and <span class="notes">hover</span> over the <span style="color: #0099ff">points</span>/<span style="color: #ff0099">lines</span> to see how they are connected.</p> -->
-			<p>To build intuition, let's look at another linear function: y = x + 1.</p>
+			<p>To build intuition, let's look at another linear function: \( y = x + 1 \).</p>
 
 			<div id="y-eq-x-plus-one">
 				<iframe src="minis/y-equals-x-plus-one.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>Interesting. The lines in the Parallel coordinate plot are still parallel to each other, but now they have a small slope. And, as many of us are already familiar with, the Cartesian coordinate graph shows the y = x line translated one unit upward on the y-axis.</p>
+			<p>Interesting. The lines in the Parallel coordinate plot are still parallel to each other, but now they have a small slope. And, as many of us are already familiar with, the Cartesian coordinate graph shows the \( y = x \) line translated one unit upward on the y-axis.</p>
 
-			<p>Since the slope of the parallel coordinate lines changed when modifying the y-intercept, let's look at what altering the slope of the equation does. Let's look at the function: y = 3x.</p>
+			<p>Since the slope of the parallel coordinate lines changed when modifying the y-intercept, let's look at what altering the slope of the equation does. Let's look at the function: \( y = 3x \).</p>
 
 			<div id="y-eq-3x">
 				<iframe src="minis/y-equals-3x.html" scrolling="no" frameborder="0"></iframe>
@@ -86,28 +91,28 @@
 			<p>What is going on now? The lines aren't parallel anymore. This looks nonlinear now, but remember, this is in Parallel Coordinates. Perhaps a better way to think about this is to think <span class="notes">scaling</span>. In other words, each x-value is mapped to a y-value that has been stretched by three times the original x-value.</p>
 
 			<p>One thing to watch for in particular is the scaling of each axis. Just like how functions and data can be distorted by changing the scales of axes in Cartesian coordinates, Parallel coordinates are also susceptible to this kind of manipulation.</p>
-			<p>As an example, let's look at the function: y = 3x once again, but this time with different scales.</p>
+			<p>As an example, let's look at the function: \( y = 3x \) once again, but this time with different scales.</p>
 	
 			<div id="y-eq-3x-different-scales">
 				<iframe src="minis/y-equals-3x-different-scales.html" scrolling="no" frameborder="0"></iframe>
 			</div>			
 
-			<p>By making the y-axis scale three times as large as the x-axis scale, the function looks like y = x rather than y = 3x. This distortion is present on both coordinate systems.</p>
+			<p>By making the y-axis scale three times as large as the x-axis scale, the function looks like \( y = x \) rather than \( y = 3x \). This distortion is present on both coordinate systems.</p>
 
 
 			<h3>Nonlinear Functions</h3>
-			<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: y = x^2.</p>
+			<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: \( y = x^2 \).</p>
 
 			<div id="y-eq-x2">
 				<iframe src="minis/y-equals-x2.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>The next nonlinear function we'll look at is the exponential function: y = exp{x}.</p>
+			<p>The next nonlinear function we'll look at is the exponential function: \( y = e^x \).</p>
 			<div id="y-eq-exp-x">
 				<iframe src="minis/y-equals-exp-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 	
-			<p>Now let's look at the fascinating trigonometric functions: y = sin(x), y = cos(x), and y = tan(x).</p>
+			<p>Now let's look at the fascinating trigonometric functions: \( y = \sin x \), \( y = \cos x \), and \( y = \tan x \).</p>
 			
 			<div id="y-eq-sinx">
 				<iframe src="minis/y-equals-sinx.html" scrolling="no" frameborder="0"></iframe>
@@ -119,20 +124,30 @@
 				<iframe src="minis/y-equals-tanx.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>Another interesting function to look at is: y = 1/x.</p>
+			<p>Another interesting function to look at is: \( y = \frac{1}{x} \).</p>
 			<div id="y-eq-one-over-x">
 				<iframe src="minis/y-equals-one-over-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>And y = 1 / x^2.</p>
+			<p>And \( y = \frac{1}{x^2} \).</p>
 
 			<div id="y-eq-one-over-x2">
 				<iframe src="minis/y-equals-one-over-x2.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>Here's the Standard Normal function: [1/sqrt(2*pi)] * exp(-1/2 * x^2)</p>
+			<p>Here's the Standard Normal function: \( \frac{1}{\sqrt{2 \pi}} e^{\frac{-1}{2} x^2} \)</p>
 			<div id="standard-normal">
 				<iframe src="minis/standard-normal.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+
+			<p>Let's try a weirder one: \( y = \frac{e^x}{e^x + 1} \)</p>
+			<div id="exp-x-over-one-plus-exp-x">
+				<iframe src="minis/exp-x-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
+			</div>
+
+			<p>And a similar weird one: \( y = \frac{1}{e^x + 1} \)</p>
+			<div id="one-over-one-plus-exp-x">
+				<iframe src="minis/one-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
 			<!-- <p>Here's another interactive, to see how changing the y-intercept alters the Parallel coordinates plot.</p> -->
