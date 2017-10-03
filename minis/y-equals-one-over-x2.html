@@ -77,16 +77,16 @@
 
     function highlightBrushedPoints(brushpoints) {
     	svg.selectAll(".cartesian-points")
-    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff9900" : "#0099ff" })
+    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
 
     	svg.selectAll(".parallel-x-points")
-    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff9900" : "#0099ff" })
+    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
 
     	svg.selectAll(".parallel-y-points")
-    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff9900" : "#0099ff" })
+    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
 
     	svg.selectAll(".parallel-point-lines")
-    			.style("stroke", function(d,i){ return brushpoints[i] ? "#ff9900" : "#0099ff" })
+    			.style("stroke", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
     }
 
     function selectPoints(s) {
