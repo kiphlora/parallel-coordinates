@@ -59,12 +59,13 @@
 			<p>
 				Of course, there are challenges for using Parallel coordinates, with the main one being a lack of interpretability. With some training and knowledge of when it's appropriate to use Parallel coordinate plots, we'll overcome the interpretability hurdle. And, once that happens, we can be confident of our analyses when we look at higher-dimensional data that would be difficult to visualize in Cartesian coordinates.
 			</p>
-			<h3>
+			<h3 id="how-do-parallel-coordinates-work">
 				How do Parallel coordinates work?
 			</h3>
 			<p>
 				To answer this, let's look at a simple example using both Cartesian Coordinates and Parallel Coordinates.
 				We're going to visualize the function: \( y = x \).
+				To help build intuition, click and drag to <span class="notes">brush over points on the Cartesian plane</span>. This will help you see how the two graphs are connected. All graphs in <a href="#how-do-parallel-coordinates-work">this section</a> and <a href="#nonlinear-functions">the next section</a> are brushable.
 			</p>
 
 			<div id="y-eq-x">
@@ -72,7 +73,7 @@
 			</div>
 
 			<p>Cool, right?</p>
-			<p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to.</p>
+			<p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the blue lines on the Parallel coordinate graph. This takes a while to get used to.</p>
 			<!-- <p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to. To make this clear, go ahead and <span class="notes">hover</span> over the <span style="color: #0099ff">points</span>/<span style="color: #ff0099">lines</span> to see how they are connected.</p> -->
 			<p>To build intuition, let's look at another linear function: \( y = x + 1 \).</p>
 
@@ -100,8 +101,14 @@
 			<p>By making the y-axis scale three times as large as the x-axis scale, the function looks like \( y = x \) rather than \( y = 3x \). This distortion is present on both coordinate systems.</p>
 
 
-			<h3>Nonlinear Functions</h3>
-			<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: \( y = x^2 \).</p>
+			<h3 id="nonlinear-functions">
+				Nonlinear Functions
+			</h3>
+			<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: \( y = x^2 \).
+			</p>
+			<p>
+				<span class="notes">Try brushing</span> to get a feel for how the points connect between the graphs of the two coordinate systems.
+			</p>
 
 			<div id="y-eq-x2">
 				<iframe src="minis/y-equals-x2.html" scrolling="no" frameborder="0"></iframe>
@@ -112,24 +119,39 @@
 				<iframe src="minis/y-equals-exp-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 	
-			<p>Now let's look at the fascinating trigonometric functions: \( y = \sin x \), \( y = \cos x \), and \( y = \tan x \).</p>
-			
+			<p>Now let's look at the fascinating trigonometric functions! The first one is: \( y = \sin x \). Check out how the <span class="notes">oscillating motion</span> is captured in Parallel Coordinates.</p>
 			<div id="y-eq-sinx">
 				<iframe src="minis/y-equals-sinx.html" scrolling="no" frameborder="0"></iframe>
 			</div>
+			<p>
+				Next, we have: \( y = \cos x \).
+			</p>
 			<div id="y-eq-cosx">
 				<iframe src="minis/y-equals-cosx.html" scrolling="no" frameborder="0"></iframe>
 			</div>
+			<p>
+			And here, we have: \( y = \tan x \).
+			</p>
+			<p>
+				Note that it's easier to show Parallel Coordinates with points instead of lines, so each function shown will be a discrete sample of points rather than their continuous forms. This can cause issues, especially when showing functions that have <span class="notes">asymptotes</span> where the y-values tend to <span class="notes"> \( \text{Infinity } ( \infty ) \)</span> and/or <span class="notes"> \( \text{-Infinity } ( -\infty )  \)</span>.  
+
+			</p>
+			<p>
+				\(y = \tan x \) has <span class="notes">periodic</span> asymptotes, and the y-values tend to Infinity and -Infinity at those asymptotes so quickly that it's hard to capture them well with an evenly-distributed sample of points. 
+			</p>
 			<div id="y-eq-tanx">
 				<iframe src="minis/y-equals-tanx.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
 			<p>Another interesting function to look at is: \( y = \frac{1}{x} \).</p>
+			<p>
+				\( y = \frac{1}{x} \) has a vertical asymptote at \( x = 0 \), which makes sense since \( \frac{1}{0} \) is <span class="notes">undefined</span>. As you can see, as we approach \( x = 0 \) from the left, the values tend toward \( -\infty \). And, as we approach \( x = 0 \) from the right, the values tend toward \( \infty \). 
+			</p>
 			<div id="y-eq-one-over-x">
 				<iframe src="minis/y-equals-one-over-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>And \( y = \frac{1}{x^2} \).</p>
+			<p>Here's another function with a vertical asymptote: \( y = \frac{1}{x^2} \).</p>
 
 			<div id="y-eq-one-over-x2">
 				<iframe src="minis/y-equals-one-over-x2.html" scrolling="no" frameborder="0"></iframe>
@@ -140,12 +162,12 @@
 				<iframe src="minis/standard-normal.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>Let's try a weirder one: \( y = \frac{e^x}{e^x + 1} \)</p>
+			<p>This one is sometimes called the <a href="https://en.wikipedia.org/wiki/Sigmoid_function">Sigmoid function</a> : \( y = \frac{e^x}{e^x + 1} \)</p>
 			<div id="exp-x-over-one-plus-exp-x">
 				<iframe src="minis/exp-x-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
 
-			<p>And a similar weird one: \( y = \frac{1}{e^x + 1} \)</p>
+			<p>And a similar one: \( y = \frac{1}{e^x + 1} \)</p>
 			<div id="one-over-one-plus-exp-x">
 				<iframe src="minis/one-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
 			</div>
@@ -157,8 +179,8 @@
 
 		<div class="footer">
 			<p>Thanks for checking this out!</p>
-			<p>There are a lot of resources on Parallel Coordinates. Here are a few.</p>
-			<p>There are also many different types of coordinate systems, each with their own strengths and weaknesses. Here are just a couple to whet your apetite. (Polar, Spherical, Radial a.k.a. Radar)</p>
+			<!-- <p>There are a lot of resources on Parallel Coordinates. Here are a few.</p> -->
+			<p>There are also many different types of coordinate systems, each with their own strengths and weaknesses.</p>
 		</div>
 </body>
 

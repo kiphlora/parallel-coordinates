@@ -14,12 +14,66 @@ function vecOp(arr, f) {
 	return a;
 }
 
+function applyFun(arr, f) {
+	var a = [];
+	for (var i=0; i<arr.length; i++) {
+		var d = arr[i];
+		a[i] = f(d, i);
+	}
+	return a;
+}
+
+
+// arr is an array of arrays
+// e.g. x = [0,1,2], y = [5,6,7]; arr = [x,y]  =>  zipped = [[0,5], [1,6], [2,7]]
+function zip(arr) {
+	var lengths = applyFun(arr, function(d,i){ return d.length; });
+	var lengthSet = new Set(lengths);
+	if (lengthSet.size != 1) {
+		console.log("array lengths not equal");
+		return [];
+	}
+
+	var len = Array.from(lengthSet)[0];
+
+	var zipped = [];
+	for (var k=0; k<len; k++) {
+		var z = [];
+		for (var i=0; i<arr.length; i++) {
+			z[i] = arr[i][k];
+		}
+		zipped[k] = z;
+	}
+	return zipped;
+}
+
+function unzip(arr) {
+	var ndim = arr[0].length;
+
+	var list = [];
+
+	for (var d=0; d<ndim; d++) {
+		list[d] = arr.map(function(m){ return m[d]; });
+	}
+
+	return list;
+}
+
+
 function areArraysEqual(arr1, arr2) {
 	if (arr1.length !== arr2.length) return false;
 	for (var i=0; i<arr1.length; i++) {
 		if (arr1[i] !== arr2[i]) return false;
 	}
 	return true;
+}
+
+function rep(value, len) {
+	var a = [];
+	for (var i=0; i<len; i++) {
+		a[i] = value;
+	}
+	return a;
 }
 
 function buildArray(len, initVal) {

@@ -59,6 +59,82 @@
 		pymax = 10;
 
 
+    function brushended() {
+      var s = d3.event.selection;
+
+      console.log(s);
+      var sp; 
+      if (s === null) {
+      	sp = selectPoints(null);
+      }
+      else {
+      	sp = selectPoints(zip(s));
+      }
+
+    	highlightBrushedPoints(sp);
+      
+    }
+
+    function highlightBrushedPoints(brushpoints) {
+    	svg.selectAll(".cartesian-points")
+    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
+
+    	svg.selectAll(".parallel-x-points")
+    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
+
+    	svg.selectAll(".parallel-y-points")
+    			.attr("fill", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
+
+    	svg.selectAll(".parallel-point-lines")
+    			.style("stroke", function(d,i){ return brushpoints[i] ? "#ff0099" : "#0099ff" })
+    }
+
+    function selectPoints(s) {
+    	if (s === null) return rep(false, points.length);
+    	var indices = [];
+    	var vectors = unzip(points);
+
+    	var x = applyFun(vectors[0], function(d,i){ return cartesian_x(d) });
+    	var y = applyFun(vectors[1], function(d,i){ return cartesian_y(d) });
+    	console.log(x);
+
+    	var sxmin = min(s[0])[1];
+    	var sxmax = max(s[0])[1];
+    	console.log("x");
+    	var xind = applyFun(x, function(d,b){
+    		// console.log(sxmin + " <= " + d + " <= " + sxmax);
+    		// console.log(d >= sxmin);
+    		// console.log(d <= sxmax);
+    		// console.log(d >= sxmin && d <= sxmax);
+    		return (d >= sxmin && d <= sxmax) ? 1 : 0; 
+    	});
+    	console.log(xind);
+
+			var symin = min(s[1])[1];
+			var symax = max(s[1])[1];
+			console.log("y");
+			var yind = applyFun(y, function(d,b){
+				// console.log(symin + " <= " + d + " <= " + symax);
+				// console.log(d >= symin);
+				// console.log(d <= symax);
+				// console.log(d >= symin && d <= symax);
+				return (d >= symin && d <= symax) ? 1 : 0;
+			});
+			console.log(yind);
+
+    	var zipped = zip([xind, yind]);
+
+    	console.log(zipped);
+
+    	var brushedPoints = applyFun(zipped, function(d,i){ return sum(d) === d.length ? true : false });
+
+    	return brushedPoints;
+    }
+
+    function idled() {
+      idleTimeout = null;
+    }
+
 		var cartesian_x = d3.scaleLinear()
 				.domain([cxmin, cxmax])
 				.range([0, width*0.60]); 
@@ -98,10 +174,10 @@
 		var points = [origin];
 		
 		function f(x){
-			return 1/x;
+			return 1 / x;
 		}
 
-		var x = seqLen(-10, 10, 151);
+		var x = seqLen(-14, 14, 251);
 		// for (var i=-20; i<=20; i++){
 		// 	x.push(i);
 		// }
@@ -112,37 +188,21 @@
 			if (y != Infinity && y != -Infinity) points.push([x[i], y]);
 		}
 
-		// svg.append("line").attr("class", "cartesian-x-axis")
-		// 		.attr("x1", cartesian_x(cxmin))
-		// 		.attr("y1", cartesian_y(0))
-		// 		.attr("x2", cartesian_x(cxmax))
-		// 		.attr("y2", cartesian_y(0))
-		// 		.attr("stroke", "#999");
+		var brush = d3.brush()
+			.extent([[0, 0], [0.6*width, height]])
+			.on("end", brushended)
+			.on("brush", brushended),
+    idleTimeout,
+    idleDelay = 350;
 
-		// svg.append("line").attr("class", "cartesian-y-axis")
-		// 		.attr("x1", cartesian_x(0))
-		// 		.attr("y1", cartesian_y(cymin))
-		// 		.attr("x2", cartesian_x(0))
-		// 		.attr("y2", cartesian_y(cymax))
-		// 		.attr("stroke", "#999");
-
-		// svg.append("line").attr("class", "parallel-x-axis")
-		// 		.attr("x1", all_p(0))
-		// 		.attr("y1", p_x(pxmin))
-		// 		.attr("x2", all_p(0))
-		// 		.attr("y2", p_x(pxmax))
-		// 		.attr("stroke", "#999");
-
-		// svg.append("line").attr("class", "parallel-y-axis")
-		// 		.attr("x1", all_p(1))
-		// 		.attr("y1", p_y(pymin))
-		// 		.attr("x2", all_p(1))
-		// 		.attr("y2", p_y(pymax))
-		// 		.attr("stroke", "#999");
+    svg.append("g")
+        .attr("class", "brush")
+        .call(brush);
 
 
 		svg.selectAll(".cartesian-points").data(points)
 			.enter().append("circle")
+				.attr("class", "cartesian-points")
 				.attr("cx", (d,i) => {return cartesian_x(d[0]);})
 				.attr("cy", (d,i) => {return cartesian_y(d[1]);})
 				.attr("r", 2)
@@ -151,27 +211,30 @@
 		pxp = points.map((m) => {return m[0];});
 		svg.selectAll(".parallel-x-points").data(pxp)
 			.enter().append("circle")
+				.attr("class", "parallel-x-points")
 				.attr("cx", (d,i) => {return all_p(0);})
 				.attr("cy", (d,i) => {return p_x(d);})
-				.attr("r", 2)
-				.attr("fill", "#ff0099")
+				.attr("r", 0)
+				.attr("fill", "#0099ff")
 
 		pyp = points.map((m) => {return m[1];});
-		svg.selectAll(".parallel-x-points").data(pyp)
+		svg.selectAll(".parallel-y-points").data(pyp)
 			.enter().append("circle")
+				.attr("class", "parallel-y-points")
 				.attr("cx", (d,i) => {return all_p(1);})
 				.attr("cy", (d,i) => {return p_y(d);})
-				.attr("r", 2)
-				.attr("fill", "#ff0099")
+				.attr("r", 0)
+				.attr("fill", "#0099ff")
 
 		svg.selectAll(".parallel-lines").data(points)
 			.enter().append("line")
+				.attr("class", "parallel-point-lines")
 				.attr("x1", all_p(0))
 				.attr("y1", (d,i) => {return p_x(d[0]);})
 				.attr("x2", all_p(1))
 				.attr("y2", (d,i) => {return p_y(d[1]);})
 				.style("stroke-width", 0.5)
-				.style("stroke", "#ff0099")
+				.style("stroke", "#0099ff")
 
 	</script>
 </body>
