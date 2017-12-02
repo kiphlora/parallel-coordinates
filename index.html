@@ -5,6 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Parallel Coordinates</title>
 
+	<link href="https://fonts.googleapis.com/css?family=Dosis:200" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/project-theme.css">
+	<link rel="stylesheet" type="text/css" href="css/page-style.css">
+	<link rel="stylesheet" href="css/prism.css">
+	<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+	
 	<script type="text/javascript" async
 	  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
 	</script>
@@ -12,8 +18,6 @@
 	<script src="js/d3/d3.min.js"></script>
 	<script src="js/util.js"></script>
 	<script src="js/Vec2.js"></script>
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
 
 
 <style>
@@ -38,155 +42,161 @@
 </style>
 </head>
 <body>
-
-	<div class="header">
-		<p class="main-title">Parallel Coordinates</p>
-		<p class="main-subtitle">exploring high dimensional data</p>
-		<p class="authors">by Brett Moran</p>
-	</div>
-	<div class="container">
-		<div class="section">
-			<h3>
-				Introduction
-			</h3>
-			<p>
-				Coordinate systems are used to help us visualize data, functions, relationships between variables, and much more. The one we are most familiar with is called the <span class="notes">Cartesian Coordinate System</span>. It is special because it places the axes (dimensions) orthogonal to each other. This is a natural and useful arrangement of variables, resulting in graphs that are natural to interpret.
-			</p>
-			<p>
-				However, there is a drawback for using orthogonal axes: there is no room to place more than three dimensions. Our vision and visualization skills are limited to three spatial dimensions. Meaning that if we want (or need) to visualize more than three dimensions, we need to use different types of encodings: color, animation, etc.
-			</p>
-			<p>
-				Are we then doomed to never visualize truly high-dimensional data? No. There are many kinds of coordinate systems that we can use to help us. The one we'll look at today is called the <span class="notes">Parallel Coordinate System</span>. Rather than placing axes orthogonal to each other, in Parallel coordinates, all axes are parallel to each other. As such, we can place as many dimensions as is reasonable; far more than we can using Cartesian coordinates.
-			</p>
-			<p>
-				Of course, there are challenges for using Parallel coordinates, with the main one being a lack of interpretability. With some training and knowledge of when it's appropriate to use Parallel coordinate plots, we'll overcome the interpretability hurdle. And, once that happens, we can be confident of our analyses when we look at higher-dimensional data that would be difficult to visualize in Cartesian coordinates.
-			</p>
-			<h3 id="how-do-parallel-coordinates-work">
-				How do Parallel coordinates work?
-			</h3>
-			<p>
-				To answer this, let's look at a simple example using both Cartesian Coordinates and Parallel Coordinates.
-				We're going to visualize the function: \( y = x \).
-				To help build intuition, click and drag to <span class="notes">brush over points on the Cartesian plane</span>. This will help you see how the two graphs are connected. All graphs in <a href="#how-do-parallel-coordinates-work">this section</a> and <a href="#nonlinear-functions">the next section</a> are brushable.
-			</p>
-
-			<div id="y-eq-x">
-				<iframe src="minis/y-equals-x.html" scrolling="no" frameborder="0"></iframe>
+<div class="container">
+		<header class="hero-header">
+			<div class="my-name">Parallel Coordinates</div>
+			<div class="nav">
+				<a href="http://www.kiphlora.com"><div class="portfolio-nav"><i class="fa fa-home" aria-hidden="true"></i></div></a>
 			</div>
+		</header>
 
-			<p>Cool, right?</p>
-			<p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the blue lines on the Parallel coordinate graph. This takes a while to get used to.</p>
-			<!-- <p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to. To make this clear, go ahead and <span class="notes">hover</span> over the <span style="color: #0099ff">points</span>/<span style="color: #ff0099">lines</span> to see how they are connected.</p> -->
-			<p>To build intuition, let's look at another linear function: \( y = x + 1 \).</p>
+		<div class="hero-content-wrapper">
+			<div class="intro-content">
 
-			<div id="y-eq-x-plus-one">
-				<iframe src="minis/y-equals-x-plus-one.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<h3>
+					Introduction
+				</h3>
+				<p>
+					Coordinate systems are used to help us visualize data, functions, relationships between variables, and much more. The one we are most familiar with is called the <span class="notes">Cartesian Coordinate System</span>. It is special because it places the axes (dimensions) orthogonal to each other. This is a natural and useful arrangement of variables, resulting in graphs that are natural to interpret.
+				</p>
+				<p>
+					However, there is a drawback for using orthogonal axes: there is no room to place more than three dimensions. Our vision and visualization skills are limited to three spatial dimensions. Meaning that if we want (or need) to visualize more than three dimensions, we need to use different types of encodings: color, animation, etc.
+				</p>
+				<p>
+					Are we then doomed to never visualize truly high-dimensional data? No. There are many kinds of coordinate systems that we can use to help us. The one we'll look at today is called the <span class="notes">Parallel Coordinate System</span>. Rather than placing axes orthogonal to each other, in Parallel coordinates, all axes are parallel to each other. As such, we can place as many dimensions as is reasonable; far more than we can using Cartesian coordinates.
+				</p>
+				<p>
+					Of course, there are challenges for using Parallel coordinates, with the main one being a lack of interpretability. With some training and knowledge of when it's appropriate to use Parallel coordinate plots, we'll overcome the interpretability hurdle. And, once that happens, we can be confident of our analyses when we look at higher-dimensional data that would be difficult to visualize in Cartesian coordinates.
+				</p>
+				<h3 id="how-do-parallel-coordinates-work">
+					How do Parallel coordinates work?
+				</h3>
+				<p>
+					To answer this, let's look at a simple example using both Cartesian Coordinates and Parallel Coordinates.
+					We're going to visualize the function: \( y = x \).
+					To help build intuition, click and drag to <span class="notes">brush over points on the Cartesian plane</span>. This will help you see how the two graphs are connected. All graphs in <a href="#how-do-parallel-coordinates-work">this section</a> and <a href="#nonlinear-functions">the next section</a> are brushable.
+				</p>
 
-			<p>Interesting. The lines in the Parallel coordinate plot are still parallel to each other, but now they have a small slope. And, as many of us are already familiar with, the Cartesian coordinate graph shows the \( y = x \) line translated one unit upward on the y-axis.</p>
+				<div id="y-eq-x">
+					<iframe src="minis/y-equals-x.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>Since the slope of the parallel coordinate lines changed when modifying the y-intercept, let's look at what altering the slope of the equation does. Let's look at the function: \( y = 3x \).</p>
+				<p>Cool, right?</p>
+				<p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the blue lines on the Parallel coordinate graph. This takes a while to get used to.</p>
+				<!-- <p>Let's look at it a bit more closely. The blue points on the Cartesian plane are the same as the pink lines on the Parallel coordinate graph. This is strange and takes a while to get used to. To make this clear, go ahead and <span class="notes">hover</span> over the <span style="color: #0099ff">points</span>/<span style="color: #ff0099">lines</span> to see how they are connected.</p> -->
+				<p>To build intuition, let's look at another linear function: \( y = x + 1 \).</p>
 
-			<div id="y-eq-3x">
-				<iframe src="minis/y-equals-3x.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<div id="y-eq-x-plus-one">
+					<iframe src="minis/y-equals-x-plus-one.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>What is going on now? The lines aren't parallel anymore. This looks nonlinear now, but remember, this is in Parallel Coordinates. Perhaps a better way to think about this is to think <span class="notes">scaling</span>. In other words, each x-value is mapped to a y-value that has been stretched by three times the original x-value.</p>
+				<p>Interesting. The lines in the Parallel coordinate plot are still parallel to each other, but now they have a small slope. And, as many of us are already familiar with, the Cartesian coordinate graph shows the \( y = x \) line translated one unit upward on the y-axis.</p>
 
-			<p>One thing to watch for in particular is the scaling of each axis. Just like how functions and data can be distorted by changing the scales of axes in Cartesian coordinates, Parallel coordinates are also susceptible to this kind of manipulation.</p>
-			<p>As an example, let's look at the function: \( y = 3x \) once again, but this time with different scales.</p>
-	
-			<div id="y-eq-3x-different-scales">
-				<iframe src="minis/y-equals-3x-different-scales.html" scrolling="no" frameborder="0"></iframe>
-			</div>			
+				<p>Since the slope of the parallel coordinate lines changed when modifying the y-intercept, let's look at what altering the slope of the equation does. Let's look at the function: \( y = 3x \).</p>
 
-			<p>By making the y-axis scale three times as large as the x-axis scale, the function looks like \( y = x \) rather than \( y = 3x \). This distortion is present on both coordinate systems.</p>
+				<div id="y-eq-3x">
+					<iframe src="minis/y-equals-3x.html" scrolling="no" frameborder="0"></iframe>
+				</div>
+
+				<p>What is going on now? The lines aren't parallel anymore. This looks nonlinear now, but remember, this is in Parallel Coordinates. Perhaps a better way to think about this is to think <span class="notes">scaling</span>. In other words, each x-value is mapped to a y-value that has been stretched by three times the original x-value.</p>
+
+				<p>One thing to watch for in particular is the scaling of each axis. Just like how functions and data can be distorted by changing the scales of axes in Cartesian coordinates, Parallel coordinates are also susceptible to this kind of manipulation.</p>
+				<p>As an example, let's look at the function: \( y = 3x \) once again, but this time with different scales.</p>
+		
+				<div id="y-eq-3x-different-scales">
+					<iframe src="minis/y-equals-3x-different-scales.html" scrolling="no" frameborder="0"></iframe>
+				</div>			
+
+				<p>By making the y-axis scale three times as large as the x-axis scale, the function looks like \( y = x \) rather than \( y = 3x \). This distortion is present on both coordinate systems.</p>
 
 
-			<h3 id="nonlinear-functions">
-				Nonlinear Functions
-			</h3>
-			<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: \( y = x^2 \).
-			</p>
-			<p>
-				<span class="notes">Try brushing</span> to get a feel for how the points connect between the graphs of the two coordinate systems.
-			</p>
+				<h3 id="nonlinear-functions">
+					Nonlinear Functions
+				</h3>
+				<p>In the previous section, some of the Parallel coordinate graphs' lines seemed nonlinear at first glance. In this section, let's take a look at some actual nonlinear functions. The first one we'll look at is the parabolic function: \( y = x^2 \).
+				</p>
+				<p>
+					<span class="notes">Try brushing</span> to get a feel for how the points connect between the graphs of the two coordinate systems.
+				</p>
 
-			<div id="y-eq-x2">
-				<iframe src="minis/y-equals-x2.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<div id="y-eq-x2">
+					<iframe src="minis/y-equals-x2.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>The next nonlinear function we'll look at is the exponential function: \( y = e^x \).</p>
-			<div id="y-eq-exp-x">
-				<iframe src="minis/y-equals-exp-x.html" scrolling="no" frameborder="0"></iframe>
-			</div>
-	
-			<p>Now let's look at the fascinating trigonometric functions! The first one is: \( y = \sin x \). Check out how the <span class="notes">oscillating motion</span> is captured in Parallel Coordinates.</p>
-			<div id="y-eq-sinx">
-				<iframe src="minis/y-equals-sinx.html" scrolling="no" frameborder="0"></iframe>
-			</div>
-			<p>
-				Next, we have: \( y = \cos x \).
-			</p>
-			<div id="y-eq-cosx">
-				<iframe src="minis/y-equals-cosx.html" scrolling="no" frameborder="0"></iframe>
-			</div>
-			<p>
-			And here, we have: \( y = \tan x \).
-			</p>
-			<p>
-				Note that it's easier to show Parallel Coordinates with points instead of lines, so each function shown will be a discrete sample of points rather than their continuous forms. This can cause issues, especially when showing functions that have <span class="notes">asymptotes</span> where the y-values tend to <span class="notes"> \( \text{Infinity } ( \infty ) \)</span> and/or <span class="notes"> \( \text{-Infinity } ( -\infty )  \)</span>.  
+				<p>The next nonlinear function we'll look at is the exponential function: \( y = e^x \).</p>
+				<div id="y-eq-exp-x">
+					<iframe src="minis/y-equals-exp-x.html" scrolling="no" frameborder="0"></iframe>
+				</div>
+		
+				<p>Now let's look at the fascinating trigonometric functions! The first one is: \( y = \sin x \). Check out how the <span class="notes">oscillating motion</span> is captured in Parallel Coordinates.</p>
+				<div id="y-eq-sinx">
+					<iframe src="minis/y-equals-sinx.html" scrolling="no" frameborder="0"></iframe>
+				</div>
+				<p>
+					Next, we have: \( y = \cos x \).
+				</p>
+				<div id="y-eq-cosx">
+					<iframe src="minis/y-equals-cosx.html" scrolling="no" frameborder="0"></iframe>
+				</div>
+				<p>
+				And here, we have: \( y = \tan x \).
+				</p>
+				<p>
+					Note that it's easier to show Parallel Coordinates with points instead of lines, so each function shown will be a discrete sample of points rather than their continuous forms. This can cause issues, especially when showing functions that have <span class="notes">asymptotes</span> where the y-values tend to <span class="notes"> \( \text{Infinity } ( \infty ) \)</span> and/or <span class="notes"> \( \text{-Infinity } ( -\infty )  \)</span>.  
 
-			</p>
-			<p>
-				\(y = \tan x \) has <span class="notes">periodic</span> asymptotes, and the y-values tend to Infinity and -Infinity at those asymptotes so quickly that it's hard to capture them well with an evenly-distributed sample of points. 
-			</p>
-			<div id="y-eq-tanx">
-				<iframe src="minis/y-equals-tanx.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				</p>
+				<p>
+					\(y = \tan x \) has <span class="notes">periodic</span> asymptotes, and the y-values tend to Infinity and -Infinity at those asymptotes so quickly that it's hard to capture them well with an evenly-distributed sample of points. 
+				</p>
+				<div id="y-eq-tanx">
+					<iframe src="minis/y-equals-tanx.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>Another interesting function to look at is: \( y = \frac{1}{x} \).</p>
-			<p>
-				\( y = \frac{1}{x} \) has a <span class="notes">vertical asymptote</span> at \( x = 0 \), which makes sense since \( \frac{1}{0} \) is <span class="notes">undefined</span>. As you can see, as we approach \( x = 0 \) from the left, the values tend toward \( -\infty \). And, as we approach \( x = 0 \) from the right, the values tend toward \( \infty \). 
-			</p>
-			<p>
-				\( y = \frac{1}{x} \) has a <span class="notes">horizonal asymptote</span>, too. No matter how far to the left or right we go along the x-axis, the y-values will never reach \( 0 \). But, they will continue to get closer and closer as we go further out.
-			</p>
-			<div id="y-eq-one-over-x">
-				<iframe src="minis/y-equals-one-over-x.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<p>Another interesting function to look at is: \( y = \frac{1}{x} \).</p>
+				<p>
+					\( y = \frac{1}{x} \) has a <span class="notes">vertical asymptote</span> at \( x = 0 \), which makes sense since \( \frac{1}{0} \) is <span class="notes">undefined</span>. As you can see, as we approach \( x = 0 \) from the left, the values tend toward \( -\infty \). And, as we approach \( x = 0 \) from the right, the values tend toward \( \infty \). 
+				</p>
+				<p>
+					\( y = \frac{1}{x} \) has a <span class="notes">horizonal asymptote</span>, too. No matter how far to the left or right we go along the x-axis, the y-values will never reach \( 0 \). But, they will continue to get closer and closer as we go further out.
+				</p>
+				<div id="y-eq-one-over-x">
+					<iframe src="minis/y-equals-one-over-x.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>Here's another function with a vertical asymptote: \( y = \frac{1}{x^2} \).</p>
+				<p>Here's another function with a vertical asymptote: \( y = \frac{1}{x^2} \).</p>
 
-			<div id="y-eq-one-over-x2">
-				<iframe src="minis/y-equals-one-over-x2.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<div id="y-eq-one-over-x2">
+					<iframe src="minis/y-equals-one-over-x2.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>Here's the Standard Normal function: \( \frac{1}{\sqrt{2 \pi}} e^{\frac{-1}{2} x^2} \)</p>
-			<div id="standard-normal">
-				<iframe src="minis/standard-normal.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<p>Here's the Standard Normal function: \( \frac{1}{\sqrt{2 \pi}} e^{\frac{-1}{2} x^2} \)</p>
+				<div id="standard-normal">
+					<iframe src="minis/standard-normal.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>This one is sometimes called the <a href="https://en.wikipedia.org/wiki/Sigmoid_function">Sigmoid function</a> : \( y = \frac{e^x}{e^x + 1} \)</p>
-			<div id="exp-x-over-one-plus-exp-x">
-				<iframe src="minis/exp-x-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<p>This one is sometimes called the <a href="https://en.wikipedia.org/wiki/Sigmoid_function">Sigmoid function</a> : \( y = \frac{e^x}{e^x + 1} \)</p>
+				<div id="exp-x-over-one-plus-exp-x">
+					<iframe src="minis/exp-x-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<p>And here's one that looks similar to the Sigmoid: \( y = \frac{1}{e^x + 1} \)</p>
-			<div id="one-over-one-plus-exp-x">
-				<iframe src="minis/one-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
-			</div>
+				<p>And here's one that looks similar to the Sigmoid: \( y = \frac{1}{e^x + 1} \)</p>
+				<div id="one-over-one-plus-exp-x">
+					<iframe src="minis/one-over-one-plus-exp-x.html" scrolling="no" frameborder="0"></iframe>
+				</div>
 
-			<!-- <p>Here's another interactive, to see how changing the y-intercept alters the Parallel coordinates plot.</p> -->
-			
+				<!-- <p>Here's another interactive, to see how changing the y-intercept alters the Parallel coordinates plot.</p> -->
 
-		</div>	
-
-		<div class="footer">
-			<p>Thanks for checking this out!</p>
-			<!-- <p>There are a lot of resources on Parallel Coordinates. Here are a few.</p> -->
-			<p>There are also many different types of coordinate systems, each with their own strengths and weaknesses.</p>
 		</div>
+		</div>
+		<footer class="hero-footer">
+			<div class="footer-info">
+			<a href="https://github.com/kiphlora/parallel-coordinates"><div><i class="fa fa-github" aria-hidden="true"></i> Parallel Coordinates</div></a>
+			<a href="mailto:kiphlora@gmail.com" target="_top"><div><i class="fa fa-envelope" aria-hidden="true"></i>
+ kiphlora@gmail.com</div></a>
+			<p>&copy 2017 Brett Moran</p>
+		</div>
+		</footer>
+  </div>
 </body>
 
 <script>
